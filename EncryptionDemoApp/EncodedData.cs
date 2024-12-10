@@ -1,13 +1,10 @@
-public class EncodedData
+namespace EncryptionDemoApp
 {
-    public byte[] EncryptedData { get; set; }
-    public byte[] EncryptedKey { get; set; }
-    public byte[]? Nonce { get; set; }
-    
-    public EncodedData(byte[] encryptedData, byte[] encryptedKey, byte[]? nonce = null)
+    public class EncodedData(byte[] encryptedData, byte[] encryptedKey, byte[] aesIV, byte[]? nonce = null)
     {
-        EncryptedData = encryptedData;
-        EncryptedKey = encryptedKey;
-        Nonce = nonce;
+        public byte[] EncryptedData { get; set; } = encryptedData;
+        public byte[] EncryptedKey { get; set; } = encryptedKey;
+        public byte[] AesIV { get; set; } = aesIV;
+        public byte[]? Nonce { get; set; } = nonce;
     }
 }

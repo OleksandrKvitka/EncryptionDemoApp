@@ -5,7 +5,9 @@ namespace EncryptionDemoApp
     {
         static void Main(string[] args)
         {
-
+            var tests = new PerformanceTest();
+            //tests.RunRsaTests();
+            tests.RunEciesTests();
         }
     }
 }
