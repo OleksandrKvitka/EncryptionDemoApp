@@ -1,11 +1,12 @@
 using System.Diagnostics;
+using Org.BouncyCastle.Math.EC.Multiplier;
 
 namespace EncryptionDemoApp
 {
     public class PerformanceTest()
     {
         private readonly List<int> rsaKeySizes = [3072, 7680, 15360];
-        private readonly List<int> EciesKeySizes = [256, 384, 521];
+        private readonly List<int> EciesKeySizes = [256];
         private readonly List<double> totalTimes = new List<double>();
 
         private const int PLAIN_TEXT_SIZE = 2048;

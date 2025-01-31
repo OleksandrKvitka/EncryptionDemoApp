@@ -1,32 +1,35 @@
-import pandas as pd
 import matplotlib.pyplot as plt
+import csv
 
-# Load data from three CSV files
-data_rsa_aes = pd.read_csv("AesAndRsa_performance.csv")
-data_ecdsa = pd.read_csv("ECIESAndAES_performance.csv")
-data_ed25519 = pd.read_csv("EdEccAndAes_performance.csv")
+# Function to read data from a CSV file
+def read_csv_data(file_path):
+    with open(file_path, 'r') as file:
+        reader = csv.reader(file)
+        headers = next(reader)  # Read the first row as headers
+        values = next(reader)   # Read the second row as values
+        return headers, list(map(float, values))
 
-# Assuming the structure of the files is the same, and we add a 'Method' column to differentiate them
-data_rsa_aes["Method"] = "AES & RSA"
-data_ecdsa["Method"] = "AES & Secp256r1"
-data_ed25519["Method"] = "AES & Curve25519"
+# Main script
+file_path = "/Users/okvitka/Documents/Aspirantura/Дисертація/Code/EncryptionDemoApp/data/multiplication_performance_results.csv"
+categories, values = read_csv_data(file_path)
 
-# Concatenate the data into one DataFrame
-combined_data = pd.concat([data_rsa_aes, data_ecdsa, data_ed25519])
+# Create bar chart
+plt.figure(figsize=(12, 6))
+plt.bar(categories, values, edgecolor="black")
 
-# Plot data
-plt.figure(figsize=(10, 6))
+# Add labels and title
+plt.xlabel("Multiplier Types", fontsize=12)
+plt.ylabel("Time, ms", fontsize=12)
+plt.title("Multiplier Performance Comparison", fontsize=14)
+plt.xticks(rotation=45, ha="right", fontsize=10)
 
-# Plot each method's data
-for method in combined_data["Method"].unique():
-    method_data = combined_data[combined_data["Method"] == method]
-    plt.plot(method_data["Plaintext Size (KB)"], method_data["Total Time (seconds)"], label=method, marker='o')
+# Add value annotations on bars
+for i, v in enumerate(values):
+    plt.text(i, v + (0.5 if v >= 0 else -0.5), str(v), ha="center", va="bottom" if v >= 0 else "top")
 
-# Set chart labels and title
-plt.xlabel("Розмір вхідного тексту, Кб")
-plt.ylabel("Час роботи, с")
-plt.legend()
-plt.grid(True)
+# Show grid for better readability
+plt.grid(axis="y", linestyle="--", alpha=0.7)
 
-# Show the plot
+# Display the chart
+plt.tight_layout()
 plt.show()
